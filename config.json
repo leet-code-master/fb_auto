@@ -1,0 +1,6 @@
+{
+    "inbox_api_key": "",
+    "proxy": "127.0.0.1:7890",
+    "socks_proxy": "127.0.0.1:7890",
+    "chromium": ".\\\\chrome-win\\\\chrome.exe"
+}

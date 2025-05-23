@@ -4,10 +4,12 @@ import {
   type RouteRecordRaw,
 } from "vue-router";
 
+import AccountDecoding from "@/views/AccountDecoding/index.vue";
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    component: () => import("@/views/home/index.vue"),
+    component: AccountDecoding,
   },
 ];
 

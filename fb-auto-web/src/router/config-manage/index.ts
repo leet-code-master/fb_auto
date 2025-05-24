@@ -11,7 +11,7 @@ export default {
     {
       path: "config-manage",
       component: () => import("@/views/config-manage/index.vue"),
-      name: "",
+      name: "config-manage",
     },
   ],
 };

@@ -165,7 +165,6 @@ const dataSource = ref<DataSource[]>([
     updateTime: "jintian ",
   },
 ]);
-
 const columns = [
   {
     title: "任务ID",
@@ -245,7 +244,7 @@ const handleStart = () => {
  * 终止执行
  */
 const handleTerminate = () => {
-  message.success("终止执行");
+  message.error("终止执行");
 };
 </script>
 

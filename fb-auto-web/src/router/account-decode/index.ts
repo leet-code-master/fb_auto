@@ -5,13 +5,13 @@ export default {
   component: Layout,
   name: "account",
   meta: {
-    title: "account",
+    title: "账号解码",
   },
   children: [
     {
       path: "account-decode",
       component: () => import("@/views/account-decode/index.vue"),
-      name: "accountList",
+      name: "account-decode",
     },
   ],
 };

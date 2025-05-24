@@ -3,51 +3,51 @@
     <div class="account-decode-wrapper">
       <a-row :gutter="16">
         <a-col :span="12">
-          <a-card title="导入字符串" :bordered="false" size="small">
-            <div class="content-wrapper">
-              <a-textarea
-                v-model:value="accountInput"
-                placeholder="请输入"
-                :rows="10"
-              />
-              <div class="decode-btn">
-                <a-flex gap="middle" justify="flex-end">
-                  <a-button @click="handleDecodeString"> 解码 </a-button>
-                  <a-button type="primary" @click="handleAddToQueue">
-                    添加到队列
-                  </a-button>
-                </a-flex>
-              </div>
-            </div>
+          <a-card title="导入字符串" :bordered="false">
+            <template #extra>
+              <a-flex gap="middle" justify="flex-end">
+                <a-button @click="handleDecodeString"> 解码 </a-button>
+                <a-button type="primary" @click="handleAddToQueue">
+                  添加到队列
+                </a-button>
+              </a-flex>
+            </template>
+            <a-textarea
+              v-model:value="accountInput"
+              allow-clear
+              placeholder="请输入字符串"
+              :rows="10"
+            />
           </a-card>
         </a-col>
         <a-col :span="12">
-          <a-card title="配置" :bordered="false" size="small">
-            <div class="content-wrapper">
-              <a-form :model="formState" :label-col="{ span: 4 }">
-                <a-form-item label="进程数">
-                  <a-input-number v-model:value="formState.process" min="1" />
-                </a-form-item>
-                <a-form-item label="后台模式">
-                  <a-switch v-model:checked="formState.backMode" />
-                </a-form-item>
-                <a-form-item label="执行模块">
-                  <a-checkbox-group
-                    v-model:value="formState.modules"
-                    :options="modulesOptions"
-                  />
-                </a-form-item>
-                <a-form-item :wrapper-col="{ offset: 4 }">
-                  <a-flex gap="middle">
-                    <a-button type="primary">启动</a-button>
-                    <a-button type="primary" danger>终止</a-button>
-                  </a-flex>
-                </a-form-item>
-                <a-form-item :wrapper-col="{ offset: 4 }">
-                  <a-progress :percent="progress" status="active" />
-                </a-form-item>
-              </a-form>
-            </div>
+          <a-card title="配置" :bordered="false">
+            <template #extra>
+              <a-flex gap="middle">
+                <a-button type="primary" @click="handleStart">启动</a-button>
+                <!-- <a-progress type="circle" :percent="75" :size="30" /> -->
+                <a-button type="primary" danger @click="handleTerminate">
+                  终止
+                </a-button>
+              </a-flex>
+            </template>
+            <a-form :model="formState" :label-col="{ span: 4 }">
+              <a-form-item label="进程数">
+                <a-input-number v-model:value="formState.process" min="1" />
+              </a-form-item>
+              <a-form-item label="后台模式">
+                <a-switch v-model:checked="formState.backMode" />
+              </a-form-item>
+              <a-form-item label="执行模块">
+                <a-checkbox-group
+                  v-model:value="formState.modules"
+                  :options="modulesOptions"
+                />
+              </a-form-item>
+              <a-form-item :wrapper-col="{ offset: 4 }">
+                <a-progress :percent="progress" status="active" />
+              </a-form-item>
+            </a-form>
           </a-card>
         </a-col>
       </a-row>
@@ -61,7 +61,7 @@
                 <span>刷新</span>
                 <ReloadOutlined />
               </a-button>
-              <a-button type="primary">
+              <a-button>
                 <span>导出</span>
                 <ExportOutlined />
               </a-button>
@@ -86,7 +86,7 @@
               </a-tag>
             </template>
             <template v-if="column.dataIndex === 'operation'">
-              <a-button type="primary" danger> 删除 </a-button>
+              <a-button type="link" danger> 删除 </a-button>
             </template>
           </template>
         </a-table>
@@ -104,11 +104,10 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 import type { UnwrapRef } from "vue";
-// import { decodeAccount } from "@/api/account";
 import { message } from "ant-design-vue";
 import Drawer from "./components/drawer.vue";
 import { transformPipeString } from "@/utils";
-import type { AccountItem } from "../../types/account.type";
+import type { AccountItem } from "@/types/account.type";
 import {
   ReloadOutlined,
   ExportOutlined,
@@ -148,13 +147,12 @@ const modulesOptions = [
 ];
 const formState: UnwrapRef<FormState> = reactive({
   process: 5,
-  backMode: false,
+  backMode: true,
   modules: [1, 2, 3, 4],
 });
 
 const accountInput = ref("");
 const progress = ref(0);
-
 const drawerVisible = ref(false);
 const drawerData = ref([]);
 const dataSource = ref<DataSource[]>([
@@ -181,26 +179,31 @@ const columns = [
     dataIndex: "account",
     key: "account",
     width: 120,
+    ellipsis: true,
   },
   {
     title: "账号串",
     dataIndex: "accountStr",
     key: "accountStr",
+    ellipsis: true,
   },
   {
     title: "状态",
     dataIndex: "status",
     key: "status",
+    ellipsis: true,
   },
   {
     title: "日志结果",
     dataIndex: "logResult",
     key: "logResult",
+    ellipsis: true,
   },
   {
     title: "更新日期",
     dataIndex: "updateTime",
     key: "updateTime",
+    ellipsis: true,
   },
   {
     title: "操作",
@@ -218,9 +221,7 @@ const handleDecodeString = () => {
     message.error("请输入账号字符串");
     return;
   }
-
   drawerData.value = transformPipeString(accountInput.value);
-
   drawerVisible.value = true;
 };
 /**
@@ -231,23 +232,24 @@ const handleAddToQueue = () => {
     message.error("请输入账号字符串");
     return;
   }
+  message.success("已添加到队列");
+};
 
-  // const params = {
-  //   account: accountInput.value,
-  // };
-  // decodeAccount(params).then((res) => {
-  //   console.log(res);
-  // });
+/**
+ * 开始执行
+ */
+const handleStart = () => {
+  message.success("开始执行");
+};
+/**
+ * 终止执行
+ */
+const handleTerminate = () => {
+  message.success("终止执行");
 };
 </script>
 
 <style>
-.content-wrapper {
-  height: 100%;
-}
-.decode-btn {
-  margin-top: 16px;
-}
 .account-table-wrapper {
   margin-top: 16px;
 }

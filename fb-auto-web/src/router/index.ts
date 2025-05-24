@@ -4,14 +4,20 @@ import {
   type RouteRecordRaw,
 } from "vue-router";
 
-import decode from "./account-decode/index.ts";
+import accountDecode from "./account-decode";
+import configManage from "./config-manage";
 
 const routes: Array<RouteRecordRaw> = [
-  decode,
-  // {
-  //   path: "/decode",
-  //   component: AccountDecoding,
-  // },
+  {
+    path: "/",
+    redirect: "/account-decode",
+  },
+  accountDecode,
+  configManage,
+  {
+    path: "/:catchAll(.*)",
+    redirect: "/account-decode",
+  },
 ];
 
 const router = createRouter({

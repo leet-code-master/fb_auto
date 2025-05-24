@@ -16,7 +16,7 @@
 </template>
 <script lang="ts" setup>
 import { computed } from "vue";
-import type { AccountItem } from "../../../types/account.type";
+import type { AccountItem } from "@/types/account.type";
 
 const props = defineProps<{
   open: boolean;

@@ -9,7 +9,7 @@ export default {
   },
   children: [
     {
-      path: "",
+      path: "account-decode",
       component: () => import("@/views/account-decode/index.vue"),
       name: "accountList",
     },

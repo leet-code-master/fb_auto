@@ -15,7 +15,7 @@
             <a-textarea
               v-model:value="accountInput"
               allow-clear
-              placeholder="请输入字符串"
+              placeholder="请输入账号字符串"
               :rows="10"
             />
           </a-card>

@@ -25,7 +25,7 @@ deactivate
 # 安装依赖
 
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 # 启动服务（自动重载模式）
@@ -43,5 +43,5 @@ uvicorn main:app --host 0.0.0.0 --port 8000
 清除 pip 缓存
 
 ```bash
-pip cache purge
+pip3 cache purge
 ```

@@ -9,7 +9,7 @@ const baseUrl = "/api";
  */
 export const getAccountList = (params: any) => {
   return request({
-    url: `${baseUrl}/account-decode`,
+    url: `${baseUrl}/account/decode`,
     method: "get",
     params,
   });

@@ -11,7 +11,9 @@ def startup(app: FastAPI) -> Callable:
     """
     async def app_start() -> None:
         # APP启动完成后触发
-        print("fastapi已启动")
+        print("----------------------------------")
+        print("              已启动               ")
+        print("----------------------------------")
 
         pass
     return app_start
@@ -25,6 +27,7 @@ def stopping(app: FastAPI) -> Callable:
     """
     async def stop_app() -> None:
         # APP停止时触发
-        print("fastapi已停止")
-
+        print("----------------------------------")
+        print("              已停止               ")
+        print("----------------------------------")
     return stop_app

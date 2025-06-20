@@ -4,19 +4,17 @@ from core import Router, Events
 from fastapi.middleware.cors import CORSMiddleware
 from config import settings
 
-from api.modules.worker.service import engine, executor
-from api.modules.worker.utils import clear_all_tables
+from api.modules.worker.service import executor  # 只导入executor
 import psutil
+from core.DataBase import create_all_tables
+
+create_all_tables()
 
 application = FastAPI(
     debug=settings.APP_DEBUG,
     docs_url=None,
     redoc_url=None,
 )
-
-# 只在开发环境自动清空所有表
-if os.environ.get("ENV") == "dev":
-    clear_all_tables(engine)
 
 # 事件监听
 application.add_event_handler("startup", Events.startup(application))
@@ -34,9 +32,11 @@ application.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 # 路由
 application.include_router(Router.router)
 app = application
+
 @app.get("/")
 async def root():
     return {"message": "欢迎使用FB自动化服务API"}

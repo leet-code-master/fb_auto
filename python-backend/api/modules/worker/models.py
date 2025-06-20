@@ -1,17 +1,13 @@
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime, Enum, JSON, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, Enum, ForeignKey, JSON
 from datetime import datetime
+from core.DataBase import Base
 from .schema import TaskStatus
-
-Base = declarative_base()
-
 
 class BatchTaskORM(Base):
     __tablename__ = "batch_task"
     id = Column(Integer, primary_key=True, autoincrement=True)
     create_time = Column(DateTime, default=datetime.now)
     status = Column(Enum(TaskStatus), default=TaskStatus.PENDING)
-
 
 class AccountTaskORM(Base):
     __tablename__ = "account_task"

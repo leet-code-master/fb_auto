@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+psutil
+python-dotenv
+alembic
+requests
+selenium
+webdriver-manager

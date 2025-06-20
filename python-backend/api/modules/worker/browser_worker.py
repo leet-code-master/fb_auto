@@ -8,8 +8,12 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.common.exceptions import (
     TimeoutException, NoSuchElementException, WebDriverException
 )
+import os
+CHROMEDRIVER_PATH = r'static\chromedriver.exe'
 
-CHROMEDRIVER_PATH = "/usr/local/bin/chromedriver"  # 修改为你的chromedriver实际路径
+print(f"CHROMEDRIVER_PATH={CHROMEDRIVER_PATH}")
+print(f"File exists: {os.path.exists(CHROMEDRIVER_PATH)}")
+print(f"Is executable: {os.access(CHROMEDRIVER_PATH, os.X_OK)}")
 
 # ===================== 页面常量 =====================
 
